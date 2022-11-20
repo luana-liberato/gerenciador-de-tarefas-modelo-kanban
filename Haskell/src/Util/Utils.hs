@@ -1,4 +1,4 @@
-module Haskell.Util.Utils (
+module Util.Utils (
         telaInicial
 ) where
 

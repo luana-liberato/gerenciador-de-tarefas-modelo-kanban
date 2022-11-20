@@ -1,3 +1,5 @@
+module Model.Tarefa where
+
 data Tarefa = Tarefa {
     id :: Int,
     nome :: String,
