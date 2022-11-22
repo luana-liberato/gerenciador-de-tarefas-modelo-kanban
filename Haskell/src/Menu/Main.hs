@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Menu.Main where
+module Main where
 import Util.Utils ( telaInicial )
 import Database.PostgreSQL.Simple ()
 import LocalDB.ConnectionDB

@@ -1,14 +1,14 @@
 module Model.Tarefa where
 
 data Tarefa = Tarefa {
+
     id :: Int,
     nome :: String,
     estado :: String,
     informacoes :: String,
-    prioridade :: String,
+    prioridade :: Int,
     idWorkspace :: Int,
     idArea :: Int
-    -- Definir como faremos a questão dos colaboradores responsáveis
-    -- Definir como faremos a questão do tempo
-    -- Definir como faremos Área
+
 }
+

@@ -1,19 +1,19 @@
 module Model.Usuario where
 
-import Database.PostgreSQL.Simple
-import Model.Workspace
+import Database.PostgreSQL.Simple.FromRow
+import Database.PostgreSQL.Simple.FromField
 
 data Usuario = Usuario {
+
     id :: Int,
     nome :: String,
     login :: String,
-    senha :: String,
-    workspaces :: [Workspace]
-} deriving (Show, Read, Eq)
+    senha :: String
+
+}
 
 instance FromRow Usuario where
     fromRow = Usuario <$> field
-                      <*> field
                       <*> field
                       <*> field
                       <*> field
