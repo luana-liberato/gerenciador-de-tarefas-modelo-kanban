@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Controller.UsuarioController where
-import  Database.PostgreSQL.Simple
+import Database.PostgreSQL.Simple ( Connection, execute )
 
 cadastrarUsuario :: Connection -> String -> String -> String -> IO ()
 cadastrarUsuario conn nome login senha = do

@@ -27,5 +27,4 @@ iniciandoDatabase = do
         c <- connectionMyDB
         createUsuarios c
         createWorkspaces c
-        createWorkspaceUsuarios c
         return c
