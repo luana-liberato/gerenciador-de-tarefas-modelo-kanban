@@ -11,4 +11,3 @@ data Tarefa = Tarefa {
     idArea :: Int
 
 }
-

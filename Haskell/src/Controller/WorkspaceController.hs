@@ -1,10 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Controller.WorkspaceController where
-import Database.PostgreSQL.Simple ( Connection, execute )
+import Database.PostgreSQL.Simple ( Connection, execute, query, Only (..) )
+import Data.Int
+import Model.Workspace
+import Model.Usuario
+import Model.Tarefa
+import Model.Area
 
-criarWorkspace :: Connection -> String -> Int -> IO ()
+criarWorkspace :: Connection -> String -> Int -> IO Int
 criarWorkspace conn nome idUsuario = do
-    let query = "insert into workspace (workspace_nome, usuario_id, is_admin) values (?,?,?)"
-    execute conn query (nome, idUsuario, True)
-    return ()
+
+    wid <- query conn "INSERT INTO workspace (workspace_nome, usuario_id) VALUES (?, ?) RETURNING workspace_id" (nome, idUsuario) :: IO [Only Int64]
+    let workid = fromIntegral (fromOnly (head wid)) :: Int
+
+    return workid
+
+

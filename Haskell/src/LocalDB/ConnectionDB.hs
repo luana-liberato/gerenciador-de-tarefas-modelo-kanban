@@ -6,10 +6,12 @@ import Database.PostgreSQL.Simple
       execute_,
       ConnectInfo(connectHost, connectDatabase, connectUser,
                   connectPassword, connectPort),
-      Connection )
+      Connection, query_ )
 
 import LocalDB.UsuarioDB
 import LocalDB.WorkspaceDB
+import Database.PostgreSQL.Simple.FromRow
+import Database.PostgreSQL.Simple.Types
 
 localDB:: ConnectInfo
 localDB = defaultConnectInfo {
@@ -27,4 +29,13 @@ iniciandoDatabase = do
         c <- connectionMyDB
         createUsuarios c
         createWorkspaces c
+        createWorkspaceUsuarios c
+        createWorkspaceAreas c
+        createWorkspaceTarefas c
         return c
+
+queryDB :: FromRow r => String -> IO [r]
+queryDB query = do
+   conn <- connectionMyDB
+   let q = read $ show query :: Query;
+   query_ conn q;

@@ -5,6 +5,8 @@ import Database.PostgreSQL.Simple ()
 import LocalDB.ConnectionDB
 
 import System.IO (utf8, hSetEncoding, stdout)
+import Controller.UsuarioController
+import Controller.WorkspaceController
 
 main :: IO()
 main = do
@@ -13,3 +15,5 @@ main = do
     putStrLn "Criando base de dados..."
     conn <- iniciandoDatabase
     putStrLn "Base de dados criada"
+    return()
+    

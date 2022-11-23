@@ -28,7 +28,8 @@ executable Kanban
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:    base ^>=4.14.3.0,
-                  postgresql-simple ^>=0.6.4
+                  postgresql-simple ^>=0.6.4,
+                  bytestring ^>=0.10.12.0
     hs-source-dirs:  .
     other-modules:   LocalDB.ConnectionDB, Util.Utils, Model.Usuario, Model.Workspace, Model.Tarefa, Model.Area, LocalDB.UsuarioDB, LocalDB.WorkspaceDB, Controller.UsuarioController, Controller.WorkspaceController
     default-language: Haskell2010
