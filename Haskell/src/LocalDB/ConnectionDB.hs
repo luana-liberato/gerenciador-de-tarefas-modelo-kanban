@@ -13,17 +13,18 @@ import LocalDB.WorkspaceDB
 import Database.PostgreSQL.Simple.FromRow
 import Database.PostgreSQL.Simple.Types
 
-localDB:: ConnectInfo
+localDB :: ConnectInfo
 localDB = defaultConnectInfo {
     connectHost = "localhost",
     connectDatabase = "kanban_app",
     connectUser = "postgres",
-    connectPassword = "mateus123",
+    connectPassword = "pg12345",
     connectPort = 5432
 }
 
 connectionMyDB :: IO Connection
 connectionMyDB = connect localDB
+
 iniciandoDatabase :: IO Connection
 iniciandoDatabase = do
         c <- connectionMyDB

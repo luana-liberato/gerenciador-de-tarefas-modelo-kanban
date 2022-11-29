@@ -27,6 +27,5 @@ removerUsuario conn id = do
     n <- execute conn "DELETE FROM usuario WHERE usuario_id = ?" $ Only id
     return $ n > 0
 
-
 isUsuario :: String -> Bool
 isUsuario login = False

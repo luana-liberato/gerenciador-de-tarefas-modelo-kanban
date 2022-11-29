@@ -1,24 +1,55 @@
 module Util.Utils (
-        telaInicial
+        telaInicial,
+        telaCadastro,
+        telaEncerramento,
+        lerEntrada
 ) where
 
-telaInicial :: String -> String
-telaInicial str = str ++ (tituloInical "") ++ (tituloEscolha "") ++ (menuInicial "")
+telaInicial :: String
+telaInicial = (tituloInical) ++ (tituloEscolha) ++ (menuInicial)
 
-menuInicial :: String -> String
-menuInicial str = str ++ "\n" 
-        ++ " ------------------------\n"
-        ++ "  1 - Fazer Login        \n"
-        ++ "  2 - Fazer cadastro     \n"
-        ++ "  3 - Encerrar programa  \n"
-        ++ " ------------------------\n"
+telaCadastro :: String
+telaCadastro = (tituloCadastro) ++ (tituloEscolha) ++ (menuCadastro)
 
-tituloInical :: String -> String
-tituloInical str = str ++ "\n"
-            ++ " --------------------------------\n"
-            ++ "   Gerenciador de Tarefas Kaban  \n"
-            ++ " --------------------------------\n"
+tituloInical :: String
+tituloInical = "\n"
+        ++ " -------------------------------- \n"
+        ++ "   Gerenciador de Tarefas Kaban   \n"
+        ++ " -------------------------------- \n"
 
-tituloEscolha :: String -> String
-tituloEscolha str = str ++ "\n"
-            ++ "  Escolha uma opção:  \n"
+menuInicial :: String
+menuInicial = "\n" 
+        ++ " ------------------------ \n"
+        ++ "  1 - Fazer Login         \n"
+        ++ "  2 - Fazer cadastro      \n"
+        ++ "  3 - Encerrar programa   \n"
+        ++ " ------------------------ \n"
+
+tituloCadastro :: String
+tituloCadastro = "\n"
+        ++ " -------------------------------- \n"
+        ++ "            Cadastro              \n"
+        ++ " -------------------------------- \n"
+
+menuCadastro :: String
+menuCadastro = "\n" 
+        ++ " ------------------------ \n"
+        ++ "  1 - Cadastrar           \n"
+        ++ "  2 - Encerrar programa   \n"
+        ++ " ------------------------ \n"
+
+tituloEscolha :: String
+tituloEscolha = "\n"
+        ++ "Escolha uma opção:\n"
+
+telaEncerramento :: String
+telaEncerramento = "\n"
+        ++ " -------------------------------- \n"
+        ++ "   Gerenciador de Tarefas Kaban   \n"
+        ++ " -------------------------------- \n"
+        ++ "            ECERRANDO...          \n"
+
+lerEntrada :: IO String
+lerEntrada = do
+        ent <- getLine
+        return ent
