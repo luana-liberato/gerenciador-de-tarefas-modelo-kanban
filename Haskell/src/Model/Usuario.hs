@@ -9,12 +9,12 @@ import qualified Data.ByteString.Char8 as C
 
 data Usuario = Usuario {
 
-    id :: Int,
+    idUsuario :: Int,
     nome :: String,
     login :: String,
     senha :: String
 
-} deriving (Read, Show)
+} deriving (Read, Show, Eq)
 
 stringToUsuarios:: String -> [Usuario]
 stringToUsuarios json_agg = do
