@@ -126,7 +126,7 @@ criacaoWorkspace conn idUsuario = do
 mostrarWorkspaces :: Connection -> Int -> IO()
 mostrarWorkspaces conn idUsuario = do
     l <- listarWorkspaces conn idUsuario
-
+    
     putStrLn("\n")
     print l
 
