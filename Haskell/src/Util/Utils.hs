@@ -8,6 +8,7 @@ module Util.Utils (
         tituloParaFazer,
         tituloEmAndamento,
         tituloFeitas,
+        telaMenuWorkspace,
         lerEntrada
 ) where
 
@@ -22,6 +23,9 @@ telaLogin = (tituloLogin) ++ (tituloEscolha) ++ (menuLogin)
 
 telaUsuario :: String
 telaUsuario = (tituloInicial) ++ (tituloEscolha) ++ (menuUsuario)
+
+telaMenuWorkspace :: String
+telaMenuWorkspace = (menuWorkspace) ++ (tituloEscolha)
 
 tituloInicial :: String
 tituloInicial = "\n"
@@ -78,6 +82,14 @@ tituloWorkspace = "\n"
         ++ "            WORKSPACE             \n"
         ++ "----------------------------------\n"
 
+menuWorkspace :: String
+menuWorkspace = "\n" 
+        ++ "-----------------------------------\n"
+        ++ " 1 - Criar tarefa                  \n"
+        ++ " 2 - Alterar status de uma tarefa  \n"
+        ++ " 3 - Sair da Workspace             \n"
+        ++ "-----------------------------------\n"
+
 tituloEscolha :: String
 tituloEscolha = "\n"
         ++ "Escolha uma opção:\n"
@@ -87,7 +99,7 @@ telaEncerramento = "\n"
         ++ "--------------------------------\n"
         ++ "  Gerenciador de Tarefas Kaban  \n"
         ++ "--------------------------------\n"
-        ++ "           ENCERRANDO...         \n"
+        ++ "          ENCERRANDO...         \n"
 
 tituloParaFazer :: String
 tituloParaFazer = "\n"

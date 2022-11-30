@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 import Menu.Sistema
-import Util.Utils ( telaInicial, telaCadastro, telaLogin, telaEncerramento, telaUsuario, tituloWorkspace, tituloParaFazer, tituloEmAndamento, tituloFeitas, lerEntrada )
+import Util.Utils ( telaInicial, telaCadastro, telaLogin, telaEncerramento, telaUsuario, tituloWorkspace, tituloParaFazer, tituloEmAndamento, tituloFeitas, telaMenuWorkspace, lerEntrada )
 import Database.PostgreSQL.Simple ( Connection )
 import LocalDB.ConnectionDB
 
@@ -129,32 +129,7 @@ mostrarWorkspaces conn idUsuario = do
 
     putStrLn("\n")
     print l
-    menuUsuario conn idUsuario
 
-
-criacaoTarefa :: Connection -> Int -> Int -> IO()
-criacaoWorkspace conn idUsuario workspaceId = do
-    putStrLn(tituloWorkspace)
-
-    putStrLn("\nInforme um nome para Tarefa:\n")
-    nomeTarefa <- lerEntrada
-
-    putStrLn("\nInforme o estado para Tarefa:\n")
-    estadoTarefa <- lerEntrada
-
-    putStrLn("\nInforme as informacoes da Tarefa:\n")
-    informacoesTarefa <- lerEntrada
-
-    putStrLn("\nInforme a prioridade para Tarefa:\n")
-    prioridadeTarefa <- lerEntrada
-
-    cadastroTarefa conn workspaceId 0 nomeTarefa informacoesTarefa estadoTarefa prioridadeTarefa
-    menuUsuario conn idUsuario
-
-mostrarTarefas :: Connection ->  Int -> Int ->  IO()
-mostrarWorkspaces conn idUsuario workspaceId = do
-    l <- listarTarefas conn workspaceId
-    print l
     menuUsuario conn idUsuario
 
 acessarWorkspace :: Connection -> Int -> IO()
@@ -163,6 +138,7 @@ acessarWorkspace conn idUsuario = do
 
     putStrLn("\nInforme o id da Workspace:\n")
     idWorkspace <- readLn :: IO Int
+
     workspace conn op idUsuario idWorkspace
     
 
@@ -177,3 +153,32 @@ workspace conn idUsuario idWorkspace = do
     -- Tarefas em andamento
 
     putStrLn(tituloFeitas)
+    -- Tarefas feitas
+
+menuWorkspace :: Connection -> Int -> Int -> IO()
+menuWorkspace conn idUsuario idWorkspace = do
+    putStrLn(telaMenuWorkspace)
+    op <- lerEntrada
+
+    opcaoMenuUsuario conn op idUsuario idWorkspace
+
+opcaoMenuWorkspace :: Connection -> String -> Int -> Int-> IO()
+opcaoMenuWorkspace conn opcao idUsuario idWorkspace | (opcao == "1") = criacaoTarefa conn idUsuario idWorkspace
+                                                    | (opcao == "3") = workspace conn idUsuario idWorkspace
+                                                    | otherwise = menuWorkspace conn idUsuario idWorkspace
+                                                    -- | (opcao == "2") = mostrarWorkspaces conn idUsuario
+
+-------- Tarefas --------
+criacaoTarefa Connection -> Int -> Int -> IO()
+criacaoTarefa conn idUsuario idWorkspace = do
+    putStrLn("\nInforme um nome para a tarefa:\n")
+    nome <- lerEntrada
+
+    putStrLn("\nInforme um estado para a tarefa:\n")
+    estado <- lerEntrada
+
+    putStrLn("\nInformações sobre a tarefa:\n")
+    informacoes <- lerEntrada
+
+    putStrLn("\nInforme prioridade da tarefa:\n")
+    prioridade <- lerEntrada
