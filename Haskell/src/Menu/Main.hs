@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 import Menu.Sistema
-import Util.Utils ( telaInicial, telaCadastro, telaLogin, telaEncerramento, telaUsuario, tituloWorkspace, lerEntrada )
+import Util.Utils ( telaInicial, telaCadastro, telaLogin, telaEncerramento, telaUsuario, tituloWorkspace, tituloWorkspace lerEntrada )
 import Database.PostgreSQL.Simple ( Connection )
 import LocalDB.ConnectionDB
 
@@ -108,9 +108,11 @@ menuUsuario conn idUsuario = do
 opcaoMenuUsuario :: Connection -> String -> Int -> IO()
 opcaoMenuUsuario conn opcao idUsuario | (opcao == "1") = criacaoWorkspace conn idUsuario
                                       | (opcao == "2") = mostrarWorkspaces conn idUsuario
-                                      | (opcao == "3") = menuPrincipal conn
+                                      | (opcao == "3") = acessarWorkspace conn idUsuario
+                                      | (opcao == "4") = menuPrincipal conn
                                       | otherwise = menuLogin conn
 
+-------- Workspace --------
 criacaoWorkspace :: Connection -> Int -> IO()
 criacaoWorkspace conn idUsuario = do
     putStrLn(tituloWorkspace)
@@ -124,6 +126,8 @@ criacaoWorkspace conn idUsuario = do
 mostrarWorkspaces :: Connection -> Int -> IO()
 mostrarWorkspaces conn idUsuario = do
     l <- listarWorkspaces conn idUsuario
+    
+    putStrLn("\n")
     print l
     menuUsuario conn idUsuario
 
@@ -152,3 +156,12 @@ mostrarWorkspaces conn idUsuario workspaceId = do
     l <- listarTarefas conn workspaceId
     print l
     menuUsuario conn idUsuario
+
+acessarWorkspace :: Connection -> Int -> IO()
+acessarWorkspace conn idUsuario = do
+    putStrLn(telaWorkspace)
+
+    putStrLn("\nInforme o id da Workspace:\n")
+    idWorkspace <- readLn :: IO Int
+
+    opcaoMenuUsuario conn op idUsuario

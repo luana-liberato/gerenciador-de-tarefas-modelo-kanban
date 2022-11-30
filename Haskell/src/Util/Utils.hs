@@ -5,6 +5,7 @@ module Util.Utils (
         telaEncerramento,
         telaUsuario,
         tituloWorkspace,
+        telaWorkspace,
         lerEntrada
 ) where
 
@@ -19,6 +20,9 @@ telaLogin = (tituloLogin) ++ (tituloEscolha) ++ (menuLogin)
 
 telaUsuario :: String
 telaUsuario = (tituloInicial) ++ (tituloEscolha) ++ (menuUsuario)
+
+telaWorkspace :: String
+telaWorkspace = (tituloWorkspace) ++ (tituloEscolha) ++ (menuWorkspace)
 
 tituloInicial :: String
 tituloInicial = "\n"
@@ -65,7 +69,8 @@ menuUsuario = "\n"
         ++ "----------------------------\n"
         ++ " 1 - Criar Workspace        \n"
         ++ " 2 - Visualizar Workspaces  \n"
-        ++ " 3 - Sair                   \n"
+        ++ " 3 - Acessar Workspace      \n"
+        ++ " 4 - Sair                   \n"
         ++ "----------------------------\n"
 
 tituloWorkspace :: String
@@ -84,6 +89,24 @@ telaEncerramento = "\n"
         ++ "  Gerenciador de Tarefas Kaban  \n"
         ++ "--------------------------------\n"
         ++ "           ENCERRANDO...         \n"
+
+tituloParaFazer :: String
+tituloParaFazer = "\n"
+        ++ "--------------------------------\n"
+        ++ "       TAREFAS PARA FAZER       \n"
+        ++ "--------------------------------\n"
+
+tituloEmAndamento :: String
+tituloEmAndamento = "\n"
+        ++ "--------------------------------\n"
+        ++ "      TAREFAS EM ANDAMENTO      \n"
+        ++ "--------------------------------\n"
+
+tituloFeitas :: String
+tituloFeitas = "\n"
+        ++ "--------------------------------\n"
+        ++ "       TAREFAS FINALIZADAS      \n"
+        ++ "--------------------------------\n"
 
 lerEntrada :: IO String
 lerEntrada = do
