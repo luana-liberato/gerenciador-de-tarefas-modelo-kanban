@@ -9,8 +9,8 @@ import LocalDB.ConnectionDB
 import Database.PostgreSQL.Simple.Types
 import GHC.IO
 
-cadastrarUsuario :: Connection -> String -> String -> String -> IO()
-cadastrarUsuario conn nome login senha = do
+criarUsuario :: Connection -> String -> String -> String -> IO()
+criarUsuario conn nome login senha = do
     let query = "insert into usuario (usuario_nome,\
                                      \usuario_login,\
                                      \usuario_senha) values (?,?,?)"

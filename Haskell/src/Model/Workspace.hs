@@ -5,7 +5,7 @@ import Database.PostgreSQL.Simple.FromField
 
 data Workspace = Workspace {
 
-    id :: Int,
+    idWorkspace :: Int,
     nome :: String
 
 }
