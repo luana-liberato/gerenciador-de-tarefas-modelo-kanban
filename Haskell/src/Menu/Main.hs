@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 import Menu.Sistema
-import Util.Utils ( telaInicial, telaCadastro, telaLogin, telaEncerramento, telaUsuario, tituloWorkspace, tituloWorkspace lerEntrada )
+import Util.Utils ( telaInicial, telaCadastro, telaLogin, telaEncerramento, telaUsuario, tituloWorkspace, tituloParaFazer, tituloEmAndamento, tituloFeitas, lerEntrada )
 import Database.PostgreSQL.Simple ( Connection )
 import LocalDB.ConnectionDB
 
@@ -126,7 +126,7 @@ criacaoWorkspace conn idUsuario = do
 mostrarWorkspaces :: Connection -> Int -> IO()
 mostrarWorkspaces conn idUsuario = do
     l <- listarWorkspaces conn idUsuario
-    
+
     putStrLn("\n")
     print l
     menuUsuario conn idUsuario
@@ -159,9 +159,21 @@ mostrarWorkspaces conn idUsuario workspaceId = do
 
 acessarWorkspace :: Connection -> Int -> IO()
 acessarWorkspace conn idUsuario = do
-    putStrLn(telaWorkspace)
+    putStrLn(tituloWorkspace)
 
     putStrLn("\nInforme o id da Workspace:\n")
     idWorkspace <- readLn :: IO Int
+    workspace conn op idUsuario idWorkspace
+    
 
-    opcaoMenuUsuario conn op idUsuario
+workspace :: Connection -> Int -> Int -> IO()
+workspace conn idUsuario idWorkspace = do
+    putStrLn(tituloWorkspace)
+
+    putStrLn(tituloParaFazer)
+    -- Tarefas para fazer
+
+    putStrLn(tituloEmAndamento)
+    -- Tarefas em andamento
+
+    putStrLn(tituloFeitas)
