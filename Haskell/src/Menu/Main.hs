@@ -126,3 +126,29 @@ mostrarWorkspaces conn idUsuario = do
     l <- listarWorkspaces conn idUsuario
     print l
     menuUsuario conn idUsuario
+
+
+criacaoTarefa :: Connection -> Int -> Int -> IO()
+criacaoWorkspace conn idUsuario workspaceId = do
+    putStrLn(tituloWorkspace)
+
+    putStrLn("\nInforme um nome para Tarefa:\n")
+    nomeTarefa <- lerEntrada
+
+    putStrLn("\nInforme o estado para Tarefa:\n")
+    estadoTarefa <- lerEntrada
+
+    putStrLn("\nInforme as informacoes da Tarefa:\n")
+    informacoesTarefa <- lerEntrada
+
+    putStrLn("\nInforme a prioridade para Tarefa:\n")
+    prioridadeTarefa <- lerEntrada
+
+    cadastroTarefa conn workspaceId 0 nomeTarefa informacoesTarefa estadoTarefa prioridadeTarefa
+    menuUsuario conn idUsuario
+
+mostrarTarefas :: Connection ->  Int -> Int ->  IO()
+mostrarWorkspaces conn idUsuario workspaceId = do
+    l <- listarTarefas conn workspaceId
+    print l
+    menuUsuario conn idUsuario

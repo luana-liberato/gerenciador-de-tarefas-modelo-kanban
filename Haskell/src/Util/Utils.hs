@@ -83,7 +83,7 @@ telaEncerramento = "\n"
         ++ "--------------------------------\n"
         ++ "  Gerenciador de Tarefas Kaban  \n"
         ++ "--------------------------------\n"
-        ++ "           ECERRANDO...         \n"
+        ++ "           ENCERRANDO...         \n"
 
 lerEntrada :: IO String
 lerEntrada = do

@@ -2,6 +2,7 @@ module Menu.Sistema where
 
 import Controller.UsuarioController
 import Controller.WorkspaceController
+import Controller.TarefaController
 import Database.PostgreSQL.Simple ( Connection )
 import Model.Workspace
 
@@ -21,4 +22,12 @@ cadastroWorkspace conn nome idUsuario = do
 listarWorkspaces :: Connection -> Int -> IO [Workspace]
 listarWorkspaces conn idUsuario = do
     getWorkspaces conn idUsuario
+
+cadastroTarefa :: Connection -> Int -> Int -> String -> String -> String -> Int -> IO [Workspace]
+cadastroTarefa conn workspaceId areaId nome info estado prioridade = do
+    criarTarefa conn workspaceId areaId nome info estado prioridade
+
+listarTarefas :: Connection -> Int -> IO [Workspace]
+listarTarefas conn workspaceId = do
+    getTarefas conn workspaceId
 
