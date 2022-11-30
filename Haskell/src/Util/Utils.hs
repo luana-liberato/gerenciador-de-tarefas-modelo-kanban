@@ -5,7 +5,9 @@ module Util.Utils (
         telaEncerramento,
         telaUsuario,
         tituloWorkspace,
-        telaWorkspace,
+        tituloParaFazer,
+        tituloEmAndamento,
+        tituloFeitas,
         lerEntrada
 ) where
 
@@ -20,9 +22,6 @@ telaLogin = (tituloLogin) ++ (tituloEscolha) ++ (menuLogin)
 
 telaUsuario :: String
 telaUsuario = (tituloInicial) ++ (tituloEscolha) ++ (menuUsuario)
-
-telaWorkspace :: String
-telaWorkspace = (tituloWorkspace) ++ (tituloEscolha) ++ (menuWorkspace)
 
 tituloInicial :: String
 tituloInicial = "\n"
