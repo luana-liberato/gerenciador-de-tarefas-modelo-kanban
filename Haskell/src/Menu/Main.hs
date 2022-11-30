@@ -139,7 +139,7 @@ acessarWorkspace conn idUsuario = do
     putStrLn("\nInforme o id da Workspace:\n")
     idWorkspace <- readLn :: IO Int
 
-    workspace conn op idUsuario idWorkspace
+    menuWorkspace conn idUsuario idWorkspace
     
 
 workspace :: Connection -> Int -> Int -> IO()
@@ -160,13 +160,13 @@ menuWorkspace conn idUsuario idWorkspace = do
     putStrLn(telaMenuWorkspace)
     op <- lerEntrada
 
-    opcaoMenuUsuario conn op idUsuario idWorkspace
+    opcaoMenuWorkspace conn op idUsuario idWorkspace
 
 opcaoMenuWorkspace :: Connection -> String -> Int -> Int-> IO()
 opcaoMenuWorkspace conn opcao idUsuario idWorkspace | (opcao == "1") = criacaoTarefa conn idUsuario idWorkspace
                                                     | (opcao == "3") = workspace conn idUsuario idWorkspace
+                                                    | (opcao == "2") = mostrarWorkspaces conn idUsuario idWorkspace
                                                     | otherwise = menuWorkspace conn idUsuario idWorkspace
-                                                    -- | (opcao == "2") = mostrarWorkspaces conn idUsuario
 
 -------- Tarefas --------
 criacaoTarefa Connection -> Int -> Int -> IO()
@@ -182,3 +182,6 @@ criacaoTarefa conn idUsuario idWorkspace = do
 
     putStrLn("\nInforme prioridade da tarefa:\n")
     prioridade <- lerEntrada
+
+    cadastroTarefa conn workspaceId 0 nome informacoes estado prioridade
+    menuWorkspace conn idUsuario idWorkspace

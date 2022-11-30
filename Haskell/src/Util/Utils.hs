@@ -86,7 +86,7 @@ menuWorkspace :: String
 menuWorkspace = "\n" 
         ++ "-----------------------------------\n"
         ++ " 1 - Criar tarefa                  \n"
-        ++ " 2 - Alterar status de uma tarefa  \n"
+        ++ " 2 - Listar tarefas  \n"
         ++ " 3 - Sair da Workspace             \n"
         ++ "-----------------------------------\n"
 
