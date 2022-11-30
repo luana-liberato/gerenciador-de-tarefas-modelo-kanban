@@ -107,7 +107,7 @@ menuUsuario conn idUsuario = do
 
 opcaoMenuUsuario :: Connection -> String -> Int -> IO()
 opcaoMenuUsuario conn opcao idUsuario | (opcao == "1") = criacaoWorkspace conn idUsuario
-                                    -- | (opcao == "2") = 
+                                      | (opcao == "2") = mostrarWorkspaces conn idUsuario
                                       | (opcao == "3") = menuPrincipal conn
                                       | otherwise = menuLogin conn
 
@@ -119,4 +119,10 @@ criacaoWorkspace conn idUsuario = do
     nomeWorkspace <- lerEntrada
 
     cadastroWorkspace conn nomeWorkspace idUsuario
+    menuUsuario conn idUsuario
+
+mostrarWorkspaces :: Connection -> Int -> IO()
+mostrarWorkspaces conn idUsuario = do
+    l <- listarWorkspaces conn idUsuario
+    print l
     menuUsuario conn idUsuario

@@ -18,7 +18,7 @@ localDB = defaultConnectInfo {
     connectHost = "localhost",
     connectDatabase = "kanban_app",
     connectUser = "postgres",
-    connectPassword = "pg12345",
+    connectPassword = "mateus123",
     connectPort = 5432
 }
 
