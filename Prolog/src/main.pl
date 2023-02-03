@@ -32,7 +32,7 @@ loginUsuario() :-
 cadastroUsuario() :-
     writeln("\n------------------- CADASTRO -------------------\n"),
     write("Digite seu nome: "),
-    read_string(Nome),
+    read(Nome),
     write("Digite o seu CPF sem (.) ou (-): "),
     read(CPF),
     write("Digite uma senha: "),
@@ -66,7 +66,7 @@ cadastroWorkspace(CPF) :-
     writeln("\n------------- CRIACAO DE WORKSPACE -------------\n"),
     write("Digite o nome da sua nova Workspace: "),
     read(_),
-    read_string(NomeWorkspace),
+    read(NomeWorkspace),
     criarWorkspace(NomeWorkspace, CPF),
     menuUsuario(CPF).
 
@@ -90,15 +90,11 @@ escolheMenuWorkspace(_, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
 cadastroTarefa(CPF, NomeWorkspace) :-
     writeln("\n--------------- CRIACAO DE TAREFA ---------------\n"),
     write('Digite o nome da nova tarefa: '),
-    read(_),
-    read_string(NomeTarefa),
-    write(NomeTarefa),
+    
+    read(NomeTarefa),
     detalhesTarefa(Detalhes, NomeTarefa),
-    write(NomeTarefa),
     statusTarefa(Status, NomeTarefa),
-    write(NomeTarefa),
     prioridadeTarefa(Prioridade, NomeTarefa),
-    write(NomeTarefa),
     criarTarefa(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade),
     workspace(CPF, NomeWorkspace).
 
@@ -111,7 +107,7 @@ detalhesTarefa(Detalhes, Nome) :-
     read(Opcao),
     opcoesDetalhesTarefa(Opcao, Detalhes, Nome).
 
-opcoesDetalhesTarefa(1, Detalhes, _) :- read(_), read_string(Detalhes).
+opcoesDetalhesTarefa(1, Detalhes, _) :- read(Detalhes).
 opcoesDetalhesTarefa(2, Detalhes, _) :- Detalhes = "Sem detalhes".
 opcoesDetalhesTarefa(_, Detalhes, Nome) :- detalhesTarefa(Detalhes, Nome).
 
