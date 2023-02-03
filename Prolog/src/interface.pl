@@ -37,7 +37,7 @@ tituloEmAndamento() :-
 
 tituloPronto() :-
     writeln('\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|'),
-    writeln('|                     PRONTO                    |'),
+    writeln('|                     PRONTA                    |'),
     writeln('|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|\n').
 
 erroUsuarioNaoExiste() :-

@@ -10,5 +10,5 @@ exibirWorkspaces(CPF, [row(CPF, Nome)|B]) :-
     write(Nome),
     write('\n'),
     exibirWorkspaces(CPF, B).
-exibirWorkspaces(CPF, [_|[]]).
+exibirWorkspaces(_, [_|[]]).
 exibirWorkspaces(CPF, [_|B]) :- exibirWorkspaces(CPF, B).
