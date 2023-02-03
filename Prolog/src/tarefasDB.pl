@@ -30,8 +30,8 @@ showTarefasByStatus(CPF, Workspace, Status) :-
 
 visualizarTarefa(CPF, Workspace, NomeTarefa) :-
     csv_read_file('./dados/tarefas.csv', File),
-    write(NomeTarefa),
-    verificarTarefa(CPF, Workspace, NomeTarefa, File).
+    %verificarTarefa(CPF, Workspace, NomeTarefa, File),
+    getTarefaById(CPF, Workspace, NomeTarefa, File, T).
 
 verificarTarefa(_, _, _, []).
 verificarTarefa(CPF, Workspace, Nome, [row(CPF, Workspace, Nome, Detalhes, Status, Prioridade),_]) :-
@@ -58,14 +58,13 @@ showTarefa(Tarefa) :-
 
 getTarefaById(_, _, _, [], []).
 getTarefaById(CPF, Workspace, NomeTarefa, [A|B], Tarefa) :-
-    write(A),
     rowTarefa(A, TarefaCPF, TarefaWorkspace, TarefaNome, _, _, _),
-    isTarefa(CPF, Workspace, NomeTarefa, R),
-    (R == true -> showTarefa(A);
-    getTarefasById(CPF, Workspace, NomeTarefa, B, Tarefa)). 
+    isTarefa(CPF, Workspace, NomeTarefa, TarefaCPF, TarefaWorkspace, TarefaNome, R),
+    (R =:= true -> showTarefa(A);
+    getTarefasById(CPF, Workspace, NomeTarefa, B, Tarefa)).
 
-isTarefa(CPF, Workspace, NomeTarefa, true).
-isTarefa(CPF, Workspace, NomeTarefa, false).
+isTarefa(CPF, Workspace, Nome, CPF, Workspace, Nome, true).
+isTarefa(CPF, Workspace, Nome, _, _, _, false).
 
 removerTarefa(CPF, Workspace, NomeTarefa) :-
     csv_read_file('./dados/tarefas.csv', File),
