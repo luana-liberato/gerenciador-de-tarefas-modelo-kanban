@@ -1,6 +1,3 @@
-11223344556,Projeto PLP,Tarefa0,Detalhes da tarefa0,Em andamento,Alta
-11223344556,Projeto PLP,Tarefa1,Detalhes da tarefa1,Em andamento,Media
-11223344556,Projeto PLP,Tarefa2,Detalhes da tarefa2,Para fazer,Baixa
-11223344556,Projeto PLP,Tarefa3,Detalhes da tarefa3,Para fazer,Alta
-11223344556,Projeto PLP,Tarefa4,Detalhes da tarefa4,Para fazer,Media
-11223344556,Projeto PLP,Criar Tarefa,Sem detalhes,Pronta,Alta
+12345678910,Projeto PLP,Criar Tarefa,Contem nome detalhes status prioridade,Em andamento,Alta
+12345678910,Projeto PLP,Excluir Tarefa,Sem detalhes,Para fazer,Alta
+12345678910,Projeto PLP,Criar Tarefa,Sem detalhes,Em andamento,Alta

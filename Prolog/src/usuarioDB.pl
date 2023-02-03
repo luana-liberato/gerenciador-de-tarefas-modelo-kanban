@@ -1,4 +1,5 @@
 :- use_module(library(csv)).
+:- include('util.pl').
 :- include('interface.pl').
 
 criarUsuario(Nome, CPF, Senha) :-
@@ -6,16 +7,18 @@ criarUsuario(Nome, CPF, Senha) :-
     writeln(File, (CPF, Nome, Senha)),                 
     close(File).
 
+procurarUsuario(CPF, Verificador) :-
+    lerArquivo('usuario.csv', File),
+    procurar(CPF, File, Verificador).
+
+procurar(_, [], false).
+procurar(CPF, [row(CPF, _, _)|_], true).
+procurar(CPF, [_|B], V):- procurar(CPF, B, V).
+
 autenticarUsuario(CPF, Senha, Verificador) :-
-    csv_read_file('./dados/usuario.csv', File),
-    procurarUsuario(CPF, File, V),
-    (V == true -> autenticar(CPF, Senha, File, Verificador);
-    erroUsuarioNaoExiste).
+    lerArquivo('usuario.csv', File),
+    autenticar(CPF, Senha, File, Verificador).
     
 autenticar(_, _, [], false).
 autenticar(CPF, Senha, [row(CPF, _, Senha)|_], true).
 autenticar(CPF, Senha, [_|B], V):- autenticar(CPF, Senha, B, V).
-
-procurarUsuario(_, [], false).
-procurarUsuario(CPF, [row(CPF, _, _)|_], true).
-procurarUsuario(CPF, [_|B], V):- procurarUsuario(CPF, B, V).

@@ -24,9 +24,14 @@ loginUsuario() :-
     read(CPF),
     write("Digite sua senha: "),
     read(Senha),
-    autenticarUsuario(CPF, Senha, Verificador),
-    (Verificador == true -> menuUsuario(CPF);
-    erroUsuarioSenhaIncorreta),
+    procurarUsuario(CPF, VerificadorCPF),
+    (VerificadorCPF == false -> erroUsuarioNaoExiste, sleep(3);
+        autenticarUsuario(CPF, Senha, VerificadorSenha),
+        (VerificadorSenha == false -> erroUsuarioSenhaIncorreta;
+        sleep(1),
+        menuUsuario(CPF))
+    ),
+    sleep(3),
     menuPrincipal.
 
 cadastroUsuario() :-
@@ -35,10 +40,15 @@ cadastroUsuario() :-
     read(Nome),
     write("Digite o seu CPF sem (.) ou (-): "),
     read(CPF),
-    write("Digite uma senha: "),
-    read(Senha),
-    criarUsuario(Nome, CPF, Senha),
-    main.
+    procurarUsuario(CPF, VerificadorCPF),
+    (VerificadorCPF == false -> write("Digite uma senha: "),
+        read(Senha),
+        criarUsuario(Nome, CPF, Senha);
+        erroUsuarioJaExiste,
+        sleep(3)
+    ),
+    sleep(1),
+    menuPrincipal.
 
 menuUsuario(CPF) :-
     opcoesMenuUsuario,
@@ -54,30 +64,41 @@ escolheMenuUsuario(_, CPF) :- menuUsuario(CPF).
 visualizarWorkspaces(CPF) :-
     writeln("\n------------- LISTA DE WORKSPACES -------------\n"),
     listarWorkspaces(CPF),
+    sleep(3),
     menuUsuario(CPF).
 
 acessarWorkspace(CPF) :-
     writeln("\n-------------- ACESSAR WORKSPACE --------------\n"),
     write('Digite o nome da Workspace que deseja acessar: '),
     read(NomeWorkspace),
-    workspace(CPF, NomeWorkspace).
+    procurarWorkspace(CPF, NomeWorkspace, VerificadorWorkspace),
+    (VerificadorWorkspace == false -> erroWorkspaceInexistente, sleep(3), menuUsuario(CPF);
+    sleep(1),
+    workspace(CPF, NomeWorkspace)).
 
 cadastroWorkspace(CPF) :-
     writeln("\n------------- CRIACAO DE WORKSPACE -------------\n"),
     write("Digite o nome da sua nova Workspace: "),
     read(NomeWorkspace),
-    criarWorkspace(NomeWorkspace, CPF),
+    procurarWorkspace(CPF, NomeWorkspace, VerificadorWorkspace),
+    (VerificadorWorkspace == true -> erroWorkspaceJaExiste, sleep(3);
+    sleep(1),
+    criarWorkspace(NomeWorkspace, CPF)),
     menuUsuario(CPF).
 
 workspace(CPF, NomeWorkspace) :-
     tituloWorkspace,
     format('>> Workspace: ~w~n', NomeWorkspace),
+    sleep(1),
     tituloParaFazer,
     showTarefasByStatus(CPF, Workspace, 'Para fazer'),
+    sleep(3),
     tituloEmAndamento,
     showTarefasByStatus(CPF, Workspace, 'Em andamento'),
+    sleep(3),
     tituloPronto,
     showTarefasByStatus(CPF, Workspace, 'Pronta'),
+    sleep(3),
     opcoesMenuWorkspace,
     read(Opcao),
     escolheMenuWorkspace(Opcao, CPF, NomeWorkspace).
@@ -94,16 +115,20 @@ lerTarefa(CPF, NomeWorkspace) :-
     write('Digite o nome da tarefa que deseja visualizar: '),
     read(NomeTarefa),
     visualizarTarefa(CPF, NomeWorkspace, NomeTarefa),
+    sleep(7),
     workspace(CPF, NomeWorkspace).
 
 cadastroTarefa(CPF, NomeWorkspace) :-
     writeln("\n--------------- CRIACAO DE TAREFA ---------------\n"),
     write('Digite o nome da nova tarefa: '),
     read(NomeTarefa),
+    procurarTarefa(CPF, NomeWorkspace, NomeTarefa, VerificadorTarefa),
+    % Teste nao esta funcionando
+    (VerificadorTarefa == true -> erroTarefaJaExiste, sleep(3);
     detalhesTarefa(Detalhes, NomeTarefa),
     statusTarefa(Status, NomeTarefa),
     prioridadeTarefa(Prioridade, NomeTarefa),
-    criarTarefa(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade),
+    criarTarefa(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade)),
     workspace(CPF, NomeWorkspace).
 
 detalhesTarefa(Detalhes, Nome) :-

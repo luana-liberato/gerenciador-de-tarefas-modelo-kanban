@@ -43,14 +43,26 @@ tituloPronto() :-
 erroUsuarioNaoExiste() :-
     write('\nO usuario nao esta cadastrado para o CPF digitado.\n').
 
+erroUsuarioJaExiste() :-
+    write('\nO usuario ja esta cadastrado para o CPF digitado.\n').
+
 erroUsuarioSenhaIncorreta() :-
     write('\nA senha digitada esta incorreta.\n').
 
-semWorkspace() :-
-    write('\nO usuario nao possui Workspaces criadas.\n').
+erroSemWorkspace() :-
+    write('O usuario nao possui Workspaces criadas.\n').
 
-workspaceInexistente() :-
-    write('\nNao ha workspace com este nome para este usuario.\n').
+erroWorkspaceInexistente() :-
+    write('\nNao ha Workspace com este nome para este usuario.\n').
+    
+erroWorkspaceJaExiste() :-
+    write('\nJa existe um Workspace com este nome para este usuario.\n').
+
+erroTarefaNaoExiste() :-
+    write('\nA tarefa digitada nao existe para esta Workspace.\n').
+
+erroTarefaJaExiste() :-
+    write('\nA tarefa digitada ja exite para esta Workspace.\n').
 
 encerramentoPrograma() :-
     write('\n=-=-=-=-=-=-=-=- ENCERRANDO... -=-=-=-=-=-=-=-=\n'), 

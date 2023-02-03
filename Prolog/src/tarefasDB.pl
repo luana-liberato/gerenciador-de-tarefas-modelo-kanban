@@ -29,42 +29,35 @@ showTarefasByStatus(CPF, Workspace, Status) :-
     showList(L).
 
 visualizarTarefa(CPF, Workspace, NomeTarefa) :-
-    csv_read_file('./dados/tarefas.csv', File),
-    %verificarTarefa(CPF, Workspace, NomeTarefa, File),
-    getTarefaById(CPF, Workspace, NomeTarefa, File, T).
-
-verificarTarefa(_, _, _, []).
-verificarTarefa(CPF, Workspace, Nome, [row(CPF, Workspace, Nome, Detalhes, Status, Prioridade),_]) :-
-    write('Nome tarefa: '),
-    write(NomeTarefa),
-    write('Detalhes da tarefa: '),
-    write(Detalhes),
-    write('Status da tarefa: '),
-    write(Status),
-    write('Prioridade da tarefa :'),
-    write(Prioridade).
-verificarTarefa(CPF, Workspace, Nome, [_|B]).
-    
-showTarefa(Tarefa) :-
-    rowTarefa(Tarefa, _, _, NomeTarefa, Detalhes, Status, Prioridade),
-    write('Nome tarefa: '),
-    write(NomeTarefa),
-    write('Detalhes da tarefa: '),
-    write(Detalhes),
-    write('Status da tarefa: '),
-    write(Status),
-    write('Prioridade da tarefa :'),
-    write(Prioridade).
+    lerArquivo('tarefas.csv', File),
+    getTarefaById(CPF, Workspace, NomeTarefa, File, Tarefa),
+    (Tarefa == [] -> erroTarefaNaoExiste;
+    showTarefa(Tarefa)).
 
 getTarefaById(_, _, _, [], []).
-getTarefaById(CPF, Workspace, NomeTarefa, [A|B], Tarefa) :-
-    rowTarefa(A, TarefaCPF, TarefaWorkspace, TarefaNome, _, _, _),
-    isTarefa(CPF, Workspace, NomeTarefa, TarefaCPF, TarefaWorkspace, TarefaNome, R),
-    (R =:= true -> showTarefa(A);
-    getTarefasById(CPF, Workspace, NomeTarefa, B, Tarefa)).
+getTarefaById(CPF, Workspace, NomeTarefa, [row(CPF, Workspace, NomeTarefa, Detalhes, Status, Prioridade)|_], [CPF, Workspace, NomeTarefa, Detalhes, Status, Prioridade]).
+getTarefaById(CPF, Workspace, NomeTarefa, [_|B], T) :- getTarefaById(CPF, Workspace, NomeTarefa, B, T).
 
-isTarefa(CPF, Workspace, Nome, CPF, Workspace, Nome, true).
-isTarefa(CPF, Workspace, Nome, _, _, _, false).
+showTarefa(Tarefa) :-
+    rowTarefa(Tarefa, _, _, NomeTarefa, Detalhes, Status, Prioridade),
+    write('\nNome tarefa: '),
+    write(NomeTarefa),
+    write('\nDetalhes da tarefa: '),
+    write(Detalhes),
+    write('\nStatus da tarefa: '),
+    write(Status),
+    write('\nPrioridade da tarefa :'),
+    write(Prioridade),
+    write('\n').
+
+procurarTarefa(CPF, Workspace, Nome, Verificador) :-
+    lerArquivo('tarefas.csv', File),
+    procurar(CPF, Workspace, Nome, File, Verificador),
+    write(Verificador).
+
+procurar(_, _, _, [], false).
+procurar(CPF, Workspace, Nome, [row(CPF, Workspace, Nome, _, _)|_], true) :- write('\nCaso em que eh verdadeiro\n').
+procurar(CPF, Workspace, Nome, [_|B], V) :- write('\n'), write(Nome), write('\nBuscando\n'), procurar(CPF, Workspace, Nome, B, V).
 
 removerTarefa(CPF, Workspace, NomeTarefa) :-
     csv_read_file('./dados/tarefas.csv', File),

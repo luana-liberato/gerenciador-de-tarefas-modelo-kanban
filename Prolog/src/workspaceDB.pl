@@ -1,5 +1,6 @@
 :- use_module(library(csv)).
 :- include('interface.pl').
+:- include('util.pl').
 
 criarWorkspace(NomeWorkspace, CPF) :-
     open('./dados/workspace.csv', append, File),
@@ -7,7 +8,7 @@ criarWorkspace(NomeWorkspace, CPF) :-
     close(File).
 
 listarWorkspaces(CPF) :-
-    csv_read_file('./dados/workspace.csv', File),
+    lerArquivo('workspace.csv', File),
     exibirWorkspaces(CPF, File).
 
 exibirWorkspaces(_, []) :- semWorkspace. 
@@ -23,6 +24,10 @@ exibirWorkspaces(CPF, [row(CPF, Nome)|B]) :-
 exibirWorkspaces(_, [_|[]]).
 exibirWorkspaces(CPF, [_|B]) :- exibirWorkspaces(CPF, B).
 
-existeWorkspace(_, _, [], false).
-existeWorkspace(CPF, NomeWorkspace, [row(CPF, NomeWorkspace)|_], true).
-existeWorkspace(CPF, NomeWorkspace, [_|B], V):- existeWorkspace(CPF, NomeWorkspace, B, V).
+procurarWorkspace(CPF, Workspace, Verificador) :-
+    lerArquivo('workspace.csv', File),
+    procurar(CPF, Workspace, File, Verificador).
+
+procurar(_, _, [], false).
+procurar(CPF, NomeWorkspace, [row(CPF, NomeWorkspace)|_], true).
+procurar(CPF, NomeWorkspace, [_|B], V) :- procurar(CPF, NomeWorkspace, B, V).
