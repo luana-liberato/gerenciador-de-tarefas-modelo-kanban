@@ -22,6 +22,9 @@ erroUsuarioSenhaIncorreta() :-
 semWorkspace() :-
     write('\nO usuario nao possui Workspaces criadas.\n').
 
+workspaceInexistente() :-
+    write('\nNao ha workspace com este nome para este usuario.\n').
+
 encerramentoPrograma() :-
     write('\n=-=-=-=-=-=- ENCERRANDO.... -=-=-=-=-=-=\n'), 
     halt.
