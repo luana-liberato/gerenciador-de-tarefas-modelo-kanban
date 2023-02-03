@@ -13,6 +13,24 @@ opcoesMenuUsuario() :-
     write('4 - Sair\n'),
     write('\nEscolha uma opcao: ').
 
+tituloWorkspace() :-
+    writeln('\n=-=-=-=-=-=-=- WORKSPACE -=-=-=-=-=-=-=\n').
+
+tituloParaFazer() :-
+    writeln('\n __________________________________________\n')
+    writeln('\n|                PARA FAZER                |\n')
+    writeln('\n ——————————————————————————————————————————\n').
+
+tituloEmAndamento() :-
+    writeln('\n __________________________________________\n')
+    writeln('\n|               EM ANDAMENTO               |\n')
+    writeln('\n ——————————————————————————————————————————\n').
+
+tituloPronto() :-
+    writeln('\n __________________________________________\n')
+    writeln('\n|                  PRONTO                  |\n')
+    writeln('\n ——————————————————————————————————————————\n').
+
 erroUsuarioNaoExiste() :-
     write('\nO usuario nao esta cadastrado para o CPF digitado.\n').
 

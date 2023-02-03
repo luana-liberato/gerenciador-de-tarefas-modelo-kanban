@@ -44,7 +44,7 @@ menuUsuario(CPF) :-
     escolheMenuUsuario(Opcao, CPF).
 
 escolheMenuUsuario(1, CPF) :- visualizarWorkspaces(CPF).
-escolheMenuUsuario(2, _) :- menuPrincipal.
+escolheMenuUsuario(2, CPF) :- acessarWorkspace(CPF).
 escolheMenuUsuario(3, CPF) :- cadastroWorkspace(CPF).
 escolheMenuUsuario(4, _) :- menuPrincipal.
 escolheMenuUsuario(_, CPF) :- menuUsuario(CPF).
@@ -53,6 +53,12 @@ visualizarWorkspaces(CPF) :-
     writeln("\n--------- LISTA DE WORKSPACES ---------\n"),
     listarWorkspaces(CPF),
     menuUsuario(CPF).
+
+acessarWorkspace(CPF) :-
+    writeln("\n---------- ACESSAR WORKSPACE ----------\n"),
+    write("Digite o nome da Workspace que deseja acessar: "),
+    read(NomeWorkspace),
+    workspace(CPF, NomeWorkspace)
 
 cadastroWorkspace(CPF) :-
     writeln("\n-------- CRIACAO DE WORKSPACE --------\n"),
