@@ -1,5 +1,5 @@
 :- use_module(library(csv)).
-:- include('workspace.pl').
+:- include('interface.pl').
 
 criarWorkspace(NomeWorkspace, CPF) :-
     open('./dados/workspace.csv', append, File),
@@ -10,12 +10,19 @@ listarWorkspaces(CPF) :-
     csv_read_file('./dados/workspace.csv', File),
     exibirWorkspaces(CPF, File).
 
+exibirWorkspaces(_, []) :- semWorkspace. 
+exibirWorkspaces(CPF, [row(CPF, Nome)|[]]) :-
+    write('Workspace: '),
+    write(Nome),
+    write('\n').
+exibirWorkspaces(CPF, [row(CPF, Nome)|B]) :-
+    write('Workspace: '),
+    write(Nome),
+    write('\n'),
+    exibirWorkspaces(CPF, B).
+exibirWorkspaces(_, [_|[]]).
+exibirWorkspaces(CPF, [_|B]) :- exibirWorkspaces(CPF, B).
+
 existeWorkspace(_, _, [], false).
 existeWorkspace(CPF, NomeWorkspace, [row(CPF, NomeWorkspace)|_], true).
 existeWorkspace(CPF, NomeWorkspace, [_|B], V):- existeWorkspace(CPF, NomeWorkspace, B, V).
-
-existeWorkspaceTest(CPF, NomeWorkspace) :-
-    csv_read_file('./dados/workspace.csv', Arq),
-    existeWorkspace(CPF, NomeWorkspace, Arq, V),
-    write(V),
-    halt.

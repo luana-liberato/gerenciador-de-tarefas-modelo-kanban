@@ -65,7 +65,6 @@ acessarWorkspace(CPF) :-
 cadastroWorkspace(CPF) :-
     writeln("\n------------- CRIACAO DE WORKSPACE -------------\n"),
     write("Digite o nome da sua nova Workspace: "),
-    read(_),
     read(NomeWorkspace),
     criarWorkspace(NomeWorkspace, CPF),
     menuUsuario(CPF).
@@ -74,23 +73,32 @@ workspace(CPF, NomeWorkspace) :-
     tituloWorkspace,
     format('>> Workspace: ~w~n', NomeWorkspace),
     tituloParaFazer,
+    showTarefasByStatus(CPF, Workspace, 'Para fazer'),
     tituloEmAndamento,
+    showTarefasByStatus(CPF, Workspace, 'Em andamento'),
     tituloPronto,
+    showTarefasByStatus(CPF, Workspace, 'Pronta'),
     opcoesMenuWorkspace,
     read(Opcao),
     escolheMenuWorkspace(Opcao, CPF, NomeWorkspace).
 
-escolheMenuWorkspace(1, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
+escolheMenuWorkspace(1, CPF, NomeWorkspace) :- lerTarefa(CPF, NomeWorkspace).
 escolheMenuWorkspace(2, CPF, NomeWorkspace) :- cadastroTarefa(CPF, NomeWorkspace).
 escolheMenuWorkspace(3, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
-escolheMenuWorkspace(4, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
+escolheMenuWorkspace(4, CPF, NomeWorkspace) :- excluirTarefa(CPF, NomeWorkspace).
 escolheMenuWorkspace(5, CPF, _) :- menuUsuario(CPF).
 escolheMenuWorkspace(_, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
+
+lerTarefa(CPF, NomeWorkspace) :-
+    writeln("\n---------------- LEITURA TAREFA ----------------\n"),
+    write('Digite o nome da tarefa que deseja visualizar: '),
+    read(NomeTarefa),
+    visualizarTarefa(CPF, NomeWorkspace, NomeTarefa),
+    workspace(CPF, NomeWorkspace).
 
 cadastroTarefa(CPF, NomeWorkspace) :-
     writeln("\n--------------- CRIACAO DE TAREFA ---------------\n"),
     write('Digite o nome da nova tarefa: '),
-    
     read(NomeTarefa),
     detalhesTarefa(Detalhes, NomeTarefa),
     statusTarefa(Status, NomeTarefa),
@@ -138,3 +146,10 @@ opcoesPrioridadeTarefa(1, Prioridade, _) :- Prioridade = 'Alta'.
 opcoesPrioridadeTarefa(2, Prioridade, _) :- Prioridade = 'Media'.
 opcoesPrioridadeTarefa(3, Prioridade, _) :- Prioridade = 'Normal'.
 opcoesPrioridadeTarefa(_, Prioridade, Nome) :- prioridadeTarefa(Prioridade, Nome).
+
+excluirTarefa(CPF, NomeWorkspace) :-
+    writeln("\n--------------- EXCLUSAO DE TAREFA ---------------\n"),
+    write('Digite o nome da tarefa: '),
+    read(NomeTarefa),
+    %removerTarefa(CPF, NomeWorkspace, NomeTarefa),
+    workspace(CPF, NomeWorkspace).

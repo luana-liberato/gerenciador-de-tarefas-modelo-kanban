@@ -15,7 +15,7 @@ opcoesMenuUsuario() :-
 
 opcoesMenuWorkspace() :-
     writeln('\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n'),
-    write('1 - Visualizar tarefas\n'),
+    write('1 - Visualizar dados de uma tarefa\n'),
     write('2 - Criar tarefa\n'),
     write('3 - Atualizar status de uma tarefa\n'),
     write('4 - Excluir uma tarefa\n'),
@@ -27,7 +27,7 @@ tituloWorkspace() :-
 
 tituloParaFazer() :-
     writeln('\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|'),
-    writeln('|                    PARA FAZER                   |'),
+    writeln('|                    PARA FAZER                 |'),
     writeln('|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|\n').
 
 tituloEmAndamento() :-

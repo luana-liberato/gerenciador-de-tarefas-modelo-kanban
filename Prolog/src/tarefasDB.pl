@@ -27,5 +27,61 @@ getTarefasByStatus(CPF, Workspace, Status, L) :-
 showTarefasByStatus(CPF, Workspace, Status) :-
     getTarefasByStatus(CPF, Workspace, Status, L),
     showList(L).
-    
 
+visualizarTarefa(CPF, Workspace, NomeTarefa) :-
+    csv_read_file('./dados/tarefas.csv', File),
+    write(NomeTarefa),
+    verificarTarefa(CPF, Workspace, NomeTarefa, File).
+
+verificarTarefa(_, _, _, []).
+verificarTarefa(CPF, Workspace, Nome, [row(CPF, Workspace, Nome, Detalhes, Status, Prioridade),_]) :-
+    write('Nome tarefa: '),
+    write(NomeTarefa),
+    write('Detalhes da tarefa: '),
+    write(Detalhes),
+    write('Status da tarefa: '),
+    write(Status),
+    write('Prioridade da tarefa :'),
+    write(Prioridade).
+verificarTarefa(CPF, Workspace, Nome, [_|B]).
+    
+showTarefa(Tarefa) :-
+    rowTarefa(Tarefa, _, _, NomeTarefa, Detalhes, Status, Prioridade),
+    write('Nome tarefa: '),
+    write(NomeTarefa),
+    write('Detalhes da tarefa: '),
+    write(Detalhes),
+    write('Status da tarefa: '),
+    write(Status),
+    write('Prioridade da tarefa :'),
+    write(Prioridade).
+
+getTarefaById(_, _, _, [], []).
+getTarefaById(CPF, Workspace, NomeTarefa, [A|B], Tarefa) :-
+    write(A),
+    rowTarefa(A, TarefaCPF, TarefaWorkspace, TarefaNome, _, _, _),
+    isTarefa(CPF, Workspace, NomeTarefa, R),
+    (R == true -> showTarefa(A);
+    getTarefasById(CPF, Workspace, NomeTarefa, B, Tarefa)). 
+
+isTarefa(CPF, Workspace, NomeTarefa, true).
+isTarefa(CPF, Workspace, NomeTarefa, false).
+
+removerTarefa(CPF, Workspace, NomeTarefa) :-
+    csv_read_file('./dados/tarefas.csv', File),
+    getTarefaById(CPF, Workspace, NomeTarefa, File, Tarefa),
+    limparTarefas,
+    reescritaTarefas().
+    
+limparTarefas() :-
+    open('./dados/Locacoes.csv', write, File),
+    write(File, ''),
+    close(File).
+
+reescritaTarefas([]).
+reescritaTarefas([H|T]) :-
+    (rowTarefa(H, CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade),
+    criarTarefa(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade),
+    escreveLocacoes(T)).
+
+rowTarefa([CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade], CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade).
