@@ -64,6 +64,9 @@ erroTarefaNaoExiste() :-
 erroTarefaJaExiste() :-
     write('\nA tarefa digitada ja exite para esta Workspace.\n').
 
+erroStatusInvalido() :-
+    write('\nO valor digitado eh invalido.\n').
+
 encerramentoPrograma() :-
     write('\n=-=-=-=-=-=-=-=- ENCERRANDO... -=-=-=-=-=-=-=-=\n'), 
     halt.

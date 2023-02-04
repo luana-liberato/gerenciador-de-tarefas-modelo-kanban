@@ -35,7 +35,7 @@ visualizarTarefa(CPF, Workspace, NomeTarefa) :-
     showTarefa(Tarefa)).
 
 getTarefaById(_, _, _, [], []).
-getTarefaById(CPF, Workspace, NomeTarefa, [row(CPF, Workspace, NomeTarefa, Detalhes, Status, Prioridade)|_], [CPF, Workspace, NomeTarefa, Detalhes, Status, Prioridade]).
+getTarefaById(CPF, Workspace, NomeTarefa, [row(CPF, Workspace, NomeTarefa, Detalhes, Status, Prioridade)|_], row(CPF, Workspace, NomeTarefa, Detalhes, Status, Prioridade)).
 getTarefaById(CPF, Workspace, NomeTarefa, [_|B], T) :- getTarefaById(CPF, Workspace, NomeTarefa, B, T).
 
 showTarefa(Tarefa) :-
@@ -46,7 +46,7 @@ showTarefa(Tarefa) :-
     write(Detalhes),
     write('\nStatus da tarefa: '),
     write(Status),
-    write('\nPrioridade da tarefa :'),
+    write('\nPrioridade da tarefa: '),
     write(Prioridade),
     write('\n').
 
@@ -56,24 +56,37 @@ procurarTarefa(CPF, Workspace, Nome, Verificador) :-
     write(Verificador).
 
 procurar(_, _, _, [], false).
-procurar(CPF, Workspace, Nome, [row(CPF, Workspace, Nome, _, _)|_], true) :- write('\nCaso em que eh verdadeiro\n').
-procurar(CPF, Workspace, Nome, [_|B], V) :- write('\n'), write(Nome), write('\nBuscando\n'), procurar(CPF, Workspace, Nome, B, V).
+procurar(CPF, NomeWorkspace, NomeTarefa, [row(CPF, NomeWorkspace, NomeTarefa, _, _)|_], true).
+procurar(CPF, NomeWorkspace, NomeTarefa, [_|B], V) :- procurar(CPF, NomeWorkspace, NomeTarefa, B, V).
 
 removerTarefa(CPF, Workspace, NomeTarefa) :-
-    csv_read_file('./dados/tarefas.csv', File),
+    lerArquivo('tarefas.csv', File),
     getTarefaById(CPF, Workspace, NomeTarefa, File, Tarefa),
+    novaListaTarefas(Tarefa, File, Tarefas),
     limparTarefas,
-    reescritaTarefas().
+    reescritaTarefas(Tarefas).
+
+novaListaTarefas(Tarefa, [Tarefa|T], T).
+novaListaTarefas(Tarefa, [H|T], [H|T1]) :- novaListaTarefas(Tarefa, T, T1).
     
 limparTarefas() :-
-    open('./dados/Locacoes.csv', write, File),
+    open('./dados/tarefas.csv', write, File),
     write(File, ''),
     close(File).
 
 reescritaTarefas([]).
-reescritaTarefas([H|T]) :-
-    (rowTarefa(H, CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade),
+reescritaTarefas([row(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade)|T]) :-
     criarTarefa(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade),
-    escreveLocacoes(T)).
+    reescritaTarefas(T).
 
-rowTarefa([CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade], CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade).
+rowTarefa(row(CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade), CPF, NomeWorkspace, NomeTarefa, Detalhes, Status, Prioridade).
+%alterarStatus(12345678910, 'Projeto PLP', 'Criacao de Tarefa', 'Pronta').
+alterarStatus(CPF, Workspace, Nome, Status) :-
+    lerArquivo('tarefas.csv', File),
+    write(Status),
+    getTarefaById(CPF, Workspace, Nome, File, Tarefa),
+    novaListaTarefas(Tarefa, File, Tarefas),
+    limparTarefas,
+    reescritaTarefas(Tarefas),
+    rowTarefa(Tarefa, _, _, _, Detalhes, _, Prioridade),
+    criarTarefa(CPF, Workspace, Nome, Detalhes, Status, Prioridade).

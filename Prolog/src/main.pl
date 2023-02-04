@@ -105,7 +105,7 @@ workspace(CPF, NomeWorkspace) :-
 
 escolheMenuWorkspace(1, CPF, NomeWorkspace) :- lerTarefa(CPF, NomeWorkspace).
 escolheMenuWorkspace(2, CPF, NomeWorkspace) :- cadastroTarefa(CPF, NomeWorkspace).
-escolheMenuWorkspace(3, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
+escolheMenuWorkspace(3, CPF, NomeWorkspace) :- atualizarStatus(CPF, NomeWorkspace).
 escolheMenuWorkspace(4, CPF, NomeWorkspace) :- excluirTarefa(CPF, NomeWorkspace).
 escolheMenuWorkspace(5, CPF, _) :- menuUsuario(CPF).
 escolheMenuWorkspace(_, CPF, NomeWorkspace) :- workspace(CPF, NomeWorkspace).
@@ -163,18 +163,35 @@ prioridadeTarefa(Prioridade, Nome) :-
     writeln(Nome),
     writeln('\n1 - Alta'),
     writeln('2 - Media'),
-    writeln('3 - Normal'),
+    writeln('3 - Baixa'),
     read(Opcao),
     opcoesPrioridadeTarefa(Opcao, Prioridade, Nome).
 
 opcoesPrioridadeTarefa(1, Prioridade, _) :- Prioridade = 'Alta'.
 opcoesPrioridadeTarefa(2, Prioridade, _) :- Prioridade = 'Media'.
-opcoesPrioridadeTarefa(3, Prioridade, _) :- Prioridade = 'Normal'.
+opcoesPrioridadeTarefa(3, Prioridade, _) :- Prioridade = 'Baixa'.
 opcoesPrioridadeTarefa(_, Prioridade, Nome) :- prioridadeTarefa(Prioridade, Nome).
 
 excluirTarefa(CPF, NomeWorkspace) :-
     writeln("\n--------------- EXCLUSAO DE TAREFA ---------------\n"),
     write('Digite o nome da tarefa: '),
     read(NomeTarefa),
-    %removerTarefa(CPF, NomeWorkspace, NomeTarefa),
+    removerTarefa(CPF, NomeWorkspace, NomeTarefa),
     workspace(CPF, NomeWorkspace).
+
+atualizarStatus(CPF, NomeWorkspace) :-
+    writeln("\n---------------- STATUS DE TAREFA ----------------\n"),
+    write('Digite o nome da tarefa que deseja alterar: '),
+    read(NomeTarefa),
+    write('\nInforme o status da da tarefa: '),
+    writeln('\n1 - Para fazer'),
+    writeln('2 - Em andamento'),
+    writeln('3 - Pronta'),
+    read(Opcao),
+    (Opcao == 1 -> alterarStatus(CPF, NomeWorkspace, NomeTarefa, 'Para fazer');
+    Opcao == 2 -> alterarStatus(CPF, NomeWorkspace, NomeTarefa, 'Em andamento');
+    Opcao == 3 -> alterarStatus(CPF, NomeWorkspace, NomeTarefa, 'Pronta');
+    erroStatusInvalido, sleep(3), atualizarStatus(CPF, NomeWorkspace)),
+    sleep(1),
+    workspace(CPF, NomeWorkspace).
+
