@@ -1,3 +1,5 @@
+:-style_check(-discontiguous).
+:-style_check(-singleton).
 :- (initialization main).
 :- include('interface.pl').
 :- include('usuarioDB.pl').
